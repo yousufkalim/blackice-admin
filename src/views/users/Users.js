@@ -16,10 +16,10 @@
 
 */
 // reactstrap components
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import api from "api";
-import { Store, UpdateStore } from "StoreContext";
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import api from 'api';
+import { Store, UpdateStore } from 'StoreContext';
 import {
   Badge,
   Card,
@@ -33,13 +33,13 @@ import {
   Table,
   Container,
   Row,
-} from "reactstrap";
+} from 'reactstrap';
 
 // core components
-import AddUser from "./AddUser";
-import EditUser from "./EditUser";
-import Header from "components/Headers/Header.js";
-import { toast } from "react-toastify";
+import AddUser from './AddUser';
+import EditUser from './EditUser';
+import Header from 'components/Headers/Header.js';
+import { toast } from 'react-toastify';
 
 const Users = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -48,14 +48,15 @@ const Users = () => {
   const updateStore = UpdateStore();
   const history = useHistory();
   const [user, setUser] = useState({
-    _id: "",
-    name: "",
-    email: "",
-    password: "",
-    address: "",
-    number: "",
-    country: "",
-    city: "",
+    _id: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    // address: '',
+    number: '',
+    // country: '',
+    // city: '',
   });
 
   useEffect(() => {
@@ -63,11 +64,9 @@ const Users = () => {
   }, []);
 
   const getUsers = async () => {
-    const data = await api("get", "/users");
-
+    const data = await api('get', '/staff/allStaffs');
     updateStore({ users: data.users });
   };
-
   const handleModal = () => {
     setOpenModal((open) => !open);
     return openModal;
@@ -77,12 +76,13 @@ const Users = () => {
     if (item) {
       setUser({
         _id: item._id,
-        name: item.name,
+        first_name: item.first_name,
+        last_name: item.last_name,
         email: item.email,
-        address: item.address,
+        // address: item.address,
         number: item.number,
-        country: item.country,
-        city: item.city,
+        // country: item.country,
+        // city: item.city,
       });
     }
 
@@ -91,8 +91,8 @@ const Users = () => {
   };
 
   const handleDelete = (id) => {
-    api("delete", `/users/${id}`).then(() => {
-      toast.success("User deleted successfully");
+    api('delete', `/staff/${id}`).then(() => {
+      toast.success('User deleted successfully');
       getUsers();
     });
   };
@@ -101,74 +101,84 @@ const Users = () => {
     <>
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className='mt--7' fluid>
         {/* Table */}
         <Row>
-          <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <div className="d-flex justify-content-between ">
-                  <h3 className="mb-0">Users</h3>
+          <div className='col'>
+            <Card className='shadow'>
+              <CardHeader className='border-0'>
+                <div className='d-flex justify-content-between '>
+                  <h3 className='mb-0'>Staff</h3>
                   <Button
-                    color="primary"
-                    href="#pablo"
+                    color='primary'
+                    href='#pablo'
                     onClick={handleModal}
-                    size="md"
+                    size='md'
                   >
-                    <i className="ni ni-fat-add"></i>
-                    Add user
+                    <i className='ni ni-fat-add'></i>
+                    Add Member
                   </Button>
                 </div>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
+              <Table className='align-items-center table-flush' responsive>
+                <thead className='thead-light'>
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact no</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Created At</th>
-                    <th scope="col" />
+                    <th scope='col'>First Name</th>
+                    <th scope='col'>Last Name</th>
+                    <th scope='col'>Email</th>
+                    <th scope='col'>Contact</th>
+                    <th scope='col'>Created At</th>
+                    <th scope='col' />
                   </tr>
                 </thead>
                 <tbody>
                   {users?.map((item) => {
                     return (
                       <tr>
-                        <th scope="row">
-                          <Media className="align-items-center">
-                            <Media>
-                              <span className="mb-0 text-sm" title={item.name}>
-                                {item.name?.length > 30
-                                  ? item.name?.substring(0, 30) + "..."
-                                  : item.name}
-                              </span>
-                            </Media>
+                        <th scope='row'>
+                          <Media className='align-items-center'>
+                            {/* <Media> */}
+                            <span
+                              className='mb-0 text-sm'
+                              title={item.first_name}
+                            >
+                              {item.first_name?.length > 30
+                                ? item.first_name?.substring(0, 30) + '...'
+                                : item.first_name}
+                            </span>
+                            {/* </Media> */}
                           </Media>
                         </th>
+                        <th>
+                          <span className='mb-0 text-sm' title={item.last_name}>
+                            {item.last_name?.length > 30
+                              ? item.last_name?.substring(0, 30) + '...'
+                              : item.last_name}
+                          </span>
+                        </th>
+
                         <td title={item.email}>
                           {item.email?.length > 30
-                            ? item.email?.substring(0, 30) + "..."
+                            ? item.email?.substring(0, 30) + '...'
                             : item.email}
                         </td>
 
                         <td>{item.number}</td>
-                        <td>{item.city}</td>
                         <td>{new Date(item.createdAt).toDateString()}</td>
 
-                        <td className="text-right">
+                        <td className='text-right'>
                           <UncontrolledDropdown>
                             <DropdownToggle
-                              className="btn-icon-only text-light"
-                              href="#pablo"
-                              role="button"
-                              size="sm"
-                              color=""
+                              className='btn-icon-only text-light'
+                              href='#pablo'
+                              role='button'
+                              size='sm'
+                              color=''
                               onClick={(e) => e.preventDefault()}
                             >
-                              <i className="fas fa-ellipsis-v" />
+                              <i className='fas fa-ellipsis-v' />
                             </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-arrow" right>
+                            <DropdownMenu className='dropdown-menu-arrow' right>
                               {item.test_conducted && (
                                 <DropdownItem
                                   onClick={() =>
@@ -179,18 +189,18 @@ const Users = () => {
                                 </DropdownItem>
                               )}
                               <DropdownItem
-                                href="#pablo"
+                                href='#pablo'
                                 onClick={() => handleEditModal(item)}
                               >
                                 Edit
                               </DropdownItem>
-                              <DropdownItem
-                                href="#pablo"
-                                className="text-danger"
+                              {/* <DropdownItem
+                                href='#pablo'
+                                className='text-danger'
                                 onClick={() => handleDelete(item._id)}
                               >
                                 Delete
-                              </DropdownItem>
+                              </DropdownItem> */}
                             </DropdownMenu>
                           </UncontrolledDropdown>
                         </td>

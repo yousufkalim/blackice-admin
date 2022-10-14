@@ -15,40 +15,63 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "views/Index.js";
-import Users from "views/users/Users";
-import Register from "views/Register.js";
-import Login from "views/Login.js";
+import Index from 'views/Index.js';
+import Users from 'views/users/Users';
+import Services from 'views/services/Services';
+import Packages from 'views/packages/Packages'
+import Categories from 'views/categories/Categories'
+import Register from 'views/Register.js';
+import Login from 'views/Login.js';
 
 var routes = [
   {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-red",
+    path: '/index',
+    name: 'Dashboard',
+    icon: 'ni ni-tv-2 text-red',
     component: Index,
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/users",
-    name: "All Users",
-    icon: "ni ni-single-02 text-primary",
+    path: '/staff',
+    name: 'Manage Staff',
+    icon: 'ni ni-single-02 text-primary',
     component: Users,
-    layout: "/admin",
+    layout: '/admin',
   },
-
   {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-key-25 text-info",
+    path: '/services',
+    name: 'Services',
+    icon: 'ni ni-single-02 text-primary',
+    component: Services,
+    layout: '/admin',
+  },
+  {
+    path: '/packages',
+    name: 'Packages',
+    icon: 'ni ni-single-02 text-primary',
+    component: Packages,
+    layout: '/admin',
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    icon: 'ni ni-single-02 text-primary',
+    component: Categories,
+    layout: '/admin',
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    icon: 'ni ni-key-25 text-info',
     component: Register,
-    layout: "/auth",
+    layout: '/auth',
   },
   {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-circle-08 text-pink",
+    path: '/login',
+    name: 'Login',
+    icon: 'ni ni-circle-08 text-pink',
     component: Login,
-    layout: "/auth",
+    layout: '/auth',
   },
 ];
 export default routes;

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import api from "../../api";
-import { Select } from "antd";
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import api from '../../api';
+import { Select } from 'antd';
 import {
   Modal,
   ModalBody,
@@ -13,7 +13,7 @@ import {
   Input,
   Row,
   Col,
-} from "reactstrap";
+} from 'reactstrap';
 // core components
 
 const { Option } = Select;
@@ -22,31 +22,39 @@ const EditUser = ({ openModal, handleModal, user, setUser, getUsers }) => {
   const handleInput = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+  const handleNumberInput = (e) => {
+    if (!e.target.value.match(/[^0-9]/)) {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (user.name == "") {
-      return toast.error("Please enter user's name");
+    if (user.first_name == '') {
+      return toast.error("Please enter user's first name");
+    }
+    if (user.last_name == '') {
+      return toast.error("Please enter user's last name");
     }
 
-    if (user.email == "") {
-      return toast.error("Please enter email");
+    if (user.email == '') {
+      return toast.error('Please enter email');
     }
-    if (!(user.email.includes(".") && user.email.includes("@"))) {
-      return toast.error("Please enter a valid email");
-    }
-
-    if (user.password && user.password.length < 8) {
-      return toast.error("Passwords should be of atleast 8 letters");
+    if (!(user.email.includes('.') && user.email.includes('@'))) {
+      return toast.error('Please enter a valid email');
     }
 
-    if (user.number == "") {
-      return toast.error("Contact no. is required");
+    // if (user.password && user.password.length < 8) {
+    //   return toast.error('Passwords should be of atleast 8 letters');
+    // }
+
+    if (user.number == '') {
+      return toast.error('Contact no. is required');
     }
 
-    api("put", `/users/${user._id}`, user).then((res) => {
-      toast.success("user edited successfully");
+    api('put', `/staff/${user._id}`, user).then((res) => {
+      toast.success('user edited successfully');
       getUsers();
       handleModal();
     });
@@ -54,93 +62,91 @@ const EditUser = ({ openModal, handleModal, user, setUser, getUsers }) => {
 
   return (
     <>
-      <Modal isOpen={openModal} size="xl" centered>
-        <ModalHeader charCode="X" toggle={handleModal}>
+      <Modal isOpen={openModal} size='xl' centered>
+        <ModalHeader charCode='X' toggle={handleModal}>
           Edit a user
         </ModalHeader>
         <ModalBody>
           <Row>
             <Col>
               <Form>
-                <div className="pl-lg-4">
+                <div className='pl-lg-4'>
                   <Row>
-                    <Col lg="6" style={{ margin: "auto" }}>
+                    <Col lg='6' style={{ margin: 'auto' }}>
                       <FormGroup>
-                        <span style={{ color: "red" }}>
-                          {user.name ? "" : "*"}{" "}
+                        <span style={{ color: 'red' }}>
+                          {user.first_name ? '' : '*'}{' '}
                         </span>
-                        <label className="form-control-label">Name</label>
+                        <label className='form-control-label'>First Name</label>
                         <Input
-                          className="form-control-alternative text-default"
+                          className='form-control-alternative text-default'
                           required={true}
                           placeholder="Enter user's name here"
-                          type="text"
-                          value={user.name}
-                          name="name"
+                          type='text'
+                          value={user.first_name}
+                          name='first_name'
                           onChange={handleInput}
                         />
                       </FormGroup>
                     </Col>
-                    <Col lg="6" style={{ margin: "auto" }}>
+                    <Col lg='6' style={{ margin: 'auto' }}>
                       <FormGroup>
-                        <span style={{ color: "red" }}>
-                          {user.email ? "" : "*"}{" "}
+                        <span style={{ color: 'red' }}>
+                          {user.last_name ? '' : '*'}{' '}
                         </span>
-                        <label className="form-control-label">Email</label>
+                        <label className='form-control-label'>Last Name</label>
                         <Input
-                          className="form-control-alternative text-default"
+                          className='form-control-alternative text-default'
                           required={true}
-                          placeholder="Enter user's email here"
-                          type="email"
-                          value={user.email}
-                          name="email"
+                          placeholder="Enter user's name here"
+                          type='text'
+                          value={user.last_name}
+                          name='last_name'
                           onChange={handleInput}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg="6" style={{ margin: "auto" }}>
+                    <Col lg='6' style={{ margin: 'auto' }}>
                       <FormGroup>
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-password"
-                        >
-                          Password
-                        </label>
+                        <span style={{ color: 'red' }}>
+                          {user.email ? '' : '*'}{' '}
+                        </span>
+                        <label className='form-control-label'>Email</label>
                         <Input
-                          className="form-control-alternative"
-                          id="input-password"
-                          placeholder="Password"
-                          type="password"
-                          value={user.password}
-                          name="password"
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder="Enter user's email here"
+                          type='email'
+                          value={user.email}
+                          name='email'
                           onChange={handleInput}
                         />
                       </FormGroup>
                     </Col>
-                    <Col lg="6" style={{ margin: "auto" }}>
+                    <Col lg='6'>
                       <FormGroup>
-                        <span style={{ color: "red" }}>
-                          {user.number ? "" : "*"}{" "}
+                        <span style={{ color: 'red' }}>
+                          {user.number ? '' : '*'}{' '}
                         </span>
-                        <label className="form-control-label">
+                        <label className='form-control-label'>
                           Contact no.
                         </label>
                         <Input
-                          className="form-control-alternative text-default"
+                          className='form-control-alternative text-default'
                           required={true}
                           placeholder="Enter user's contact here"
-                          type="phone"
+                          type='phone'
                           value={user.number}
-                          name="number"
-                          onChange={handleInput}
-                          maxLength="11"
+                          name='number'
+                          onChange={handleNumberInput}
+                          maxLength='11'
                         />
                       </FormGroup>
                     </Col>
                   </Row>
-                  <Row>
+                  {/* <Row>
                     <Col lg="12" style={{ margin: "auto" }}>
                       <FormGroup>
                         <label className="form-control-label">Address</label>
@@ -185,14 +191,14 @@ const EditUser = ({ openModal, handleModal, user, setUser, getUsers }) => {
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </div>
               </Form>
             </Col>
           </Row>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleSubmit}>
+          <Button color='primary' onClick={handleSubmit}>
             Update
           </Button>
 

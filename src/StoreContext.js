@@ -1,5 +1,5 @@
 // Init
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState, createContext } from 'react';
 
 // Initializing Create Context Hook
 const storeContext = createContext();
@@ -19,8 +19,9 @@ export function StoreProvider({ children }) {
   // Initializing State
   let [store, setStore] = useState({
     loggedIn: false,
-    token: "",
+    token: '',
     user: {},
+    allServices: [],
   });
 
   const updateStore = (data) => {
