@@ -19,6 +19,7 @@ import Index from 'views/Index.js';
 import Users from 'views/users/Users';
 import Services from 'views/services/Services';
 import Packages from 'views/packages/Packages';
+import Rewards from 'views/rewards/Rewards';
 import Register from 'views/Register.js';
 import Login from 'views/Login.js';
 
@@ -33,22 +34,29 @@ var routes = [
   {
     path: '/staff',
     name: 'Manage Staff',
-    icon: 'ni ni-single-02 text-primary',
+    icon: 'ni ni-single-02',
     component: Users,
     layout: '/admin',
   },
   {
     path: '/services',
     name: 'Services',
-    icon: 'ni ni-single-02 text-primary',
+    icon: 'fa fa-wrench',
     component: Services,
     layout: '/admin',
   },
   {
     path: '/packages',
     name: 'Packages',
-    icon: 'ni ni-single-02 text-primary',
+    icon: 'fa fa-archive',
     component: Packages,
+    layout: '/admin',
+  },
+  {
+    path: '/rewards',
+    name: 'Rewards',
+    icon: 'fa fa-certificate',
+    component: Rewards,
     layout: '/admin',
   },
   {
