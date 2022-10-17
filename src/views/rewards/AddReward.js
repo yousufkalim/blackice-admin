@@ -125,7 +125,7 @@ const AddReward = ({ openModal, handleModal, getRewards }) => {
                         <Input
                           className='form-control-alternative text-default'
                           required={true}
-                          placeholder="Enter user's email here"
+                          placeholder='Enter Description'
                           type='text'
                           value={reward.description}
                           name='description'

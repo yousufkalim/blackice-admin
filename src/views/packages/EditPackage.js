@@ -65,12 +65,15 @@ const EditPackage = ({
     if (packages.description == '') {
       return toast.error('Description is required ');
     }
-
     if (packages.price == '') {
       return toast.error('Please enter price');
+    } else if (packages.price == 0) {
+      return toast.error('Price cannot be zero');
     }
     if (packages.time == '') {
       return toast.error('Please enter a time');
+    } else if (packages.time == 0) {
+      return toast.error('Time cannot be zero');
     }
     api('put', `/packages/${packages._id}`, packages).then((res) => {
       toast.success('Package edited successfully');

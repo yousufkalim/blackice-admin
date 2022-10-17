@@ -41,11 +41,13 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
 
   //Summation of price & time
   useEffect(() => {
-    setPackages((s) => ({
-      ...s,
-      price: addServices?.price?.reduce((a, b) => a + b, 0),
-      time: addServices?.time?.reduce((a, b) => a + b, 0),
-    }));
+    if (addServices.length !== 0) {
+      setPackages((s) => ({
+        ...s,
+        price: addServices?.price?.reduce((a, b) => a + b, 0),
+        time: addServices?.time?.reduce((a, b) => a + b, 0),
+      }));
+    }
   }, [addServices]);
 
   const handleSelectChange = (e) => {
@@ -66,9 +68,13 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
     }
     if (packages.price == '') {
       return toast.error('Please enter price');
+    } else if (packages.price == 0) {
+      return toast.error('Price cannot be zero');
     }
     if (packages.time == '') {
       return toast.error('Please enter a time');
+    } else if (packages.time == 0) {
+      return toast.error('Time cannot be zero');
     }
 
     api('post', '/packages', {
@@ -134,7 +140,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg='6'>
+                    <Col lg='6' style={{ margin: 'auto' }}>
                       <FormGroup>
                         <label className='form-control-label'>
                           {' '}
@@ -155,7 +161,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                         />
                       </FormGroup>
                     </Col>
-                    <Col lg='6'>
+                    <Col lg='6' style={{ margin: 'auto' }}>
                       <FormGroup>
                         <label className='form-control-label'>
                           <span style={{ color: 'red' }}>

@@ -45,9 +45,13 @@ const AddService = ({ openModal, handleModal, getServices }) => {
     }
     if (service.price == '') {
       return toast.error('Please enter price');
+    } else if (service.price == 0) {
+      return toast.error('Price cannot be zero');
     }
     if (service.time == '') {
       return toast.error('Please enter a time');
+    } else if (service.time == 0) {
+      return toast.error('Time cannot be zero');
     }
 
     api('post', '/services', {
