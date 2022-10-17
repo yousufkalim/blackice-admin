@@ -18,8 +18,7 @@
 import Index from 'views/Index.js';
 import Users from 'views/users/Users';
 import Services from 'views/services/Services';
-import Packages from 'views/packages/Packages'
-import Categories from 'views/categories/Categories'
+import Packages from 'views/packages/Packages';
 import Register from 'views/Register.js';
 import Login from 'views/Login.js';
 
@@ -50,13 +49,6 @@ var routes = [
     name: 'Packages',
     icon: 'ni ni-single-02 text-primary',
     component: Packages,
-    layout: '/admin',
-  },
-  {
-    path: '/categories',
-    name: 'Categories',
-    icon: 'ni ni-single-02 text-primary',
-    component: Categories,
     layout: '/admin',
   },
   {
