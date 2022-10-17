@@ -67,7 +67,6 @@ const Packages = () => {
   };
   const getPackages = async () => {
     const data = await api('get', '/packages');
-    console.log(data, 'dd');
     updateStore({ pkg: data.packages });
   };
 
