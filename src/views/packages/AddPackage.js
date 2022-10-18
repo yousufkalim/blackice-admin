@@ -88,7 +88,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
   };
   return (
     <>
-      <Modal isOpen={openModal} sie='xl' centered>
+      <Modal isOpen={openModal} size='xl' centered>
         <ModalHeader charCode='X' toggle={handleModal}>
           Add a package
         </ModalHeader>
