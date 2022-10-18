@@ -244,7 +244,8 @@ const AddUser = ({ openModal, handleModal, getUsers }) => {
                           type='text'
                           value={user.id_card}
                           name='id_card'
-                          onChange={handleInput}
+                          onChange={handleNumberInput}
+                          maxLength={14}
                         />
                       </FormGroup>
                     </Col>
