@@ -88,7 +88,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
   };
   return (
     <>
-      <Modal isOpen={openModal} sie='xl' centered>
+      <Modal isOpen={openModal} size='xl' centered>
         <ModalHeader charCode='X' toggle={handleModal}>
           Add a package
         </ModalHeader>
@@ -183,7 +183,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg='12'>
+                    <Col lg='6'>
                       <FormGroup>
                         <label className='form-control-label'>
                           <span style={{ color: 'red' }}>
