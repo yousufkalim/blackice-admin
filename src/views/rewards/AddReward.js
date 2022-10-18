@@ -51,7 +51,7 @@ const AddReward = ({ openModal, handleModal, getRewards }) => {
     api('post', '/rewards', {
       ...reward,
     }).then((res) => {
-      toast.success('Reward added successfully');
+      toast.success(res.message);
       getRewards();
       handleModal();
     });

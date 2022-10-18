@@ -183,7 +183,7 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg='6'>
+                    <Col lg='12'>
                       <FormGroup>
                         <label className='form-control-label'>
                           <span style={{ color: 'red' }}>
