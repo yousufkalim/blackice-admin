@@ -50,7 +50,7 @@ const Packages = () => {
   const [packages, setPackages] = useState({
     name: '',
     description: '',
-    price: '',
+    price: { s: '', m: '', l: '', xl: '' },
     time: '',
   });
 
@@ -160,18 +160,24 @@ const Packages = () => {
                           </span>
                         </th>
                         <td title={item.price}>
-                          {item.price?.length > 30
-                            ? item.price?.substring(0, 30) + '...'
-                            : item.price}
-                          €
+                          <li style={{ listStyle: 'none' }}>
+                            S: {item.price.s}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            M: {item.price.m}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            L: {item.price.l}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            XL: {item.price.xl}
+                          </li>
                         </td>
                         <td>{item.time}m</td>
                         <td>
-                          <ul style={{ paddingLeft: '18px' }}>
-                            {item?.services?.map((service) => (
-                              <li>{service.name}</li>
-                            ))}
-                          </ul>
+                          {item?.services?.map((service) => (
+                            <li>{service.name}</li>
+                          ))}
                         </td>
                         <td>{new Date(item.createdAt).toDateString()}</td>
 

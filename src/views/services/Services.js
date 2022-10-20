@@ -50,7 +50,7 @@ const Services = () => {
   const [service, setService] = useState({
     name: '',
     description: '',
-    price: '',
+    price: { s: '', m: '', l: '', xl: '' },
     time: '',
   });
 
@@ -150,10 +150,18 @@ const Services = () => {
                         </th>
 
                         <td title={item.price}>
-                          {item.price?.length > 30
-                            ? item.price?.substring(0, 30) + '...'
-                            : item.price}
-                          €
+                          <li style={{ listStyle: 'none' }}>
+                            S: {item.price.s}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            M: {item.price.m}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            L: {item.price.l}
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                            XL: {item.price.xl}
+                          </li>
                         </td>
 
                         <td>{item.time}m</td>

@@ -25,27 +25,41 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
   let [packages, setPackages] = useState({
     name: '',
     description: '',
-    price: '',
+    price: { s: '', m: '', l: '', xl: '' },
     time: '',
   });
   const { allServices } = Store();
   const [addServices, setAddServices] = useState([]);
+
   const handleInput = (e) => {
     setPackages({ ...packages, [e.target.name]: e.target.value });
   };
   const handleNumberInput = (e) => {
     if (!e.target.value.match(/[^0-9]/)) {
-      setPackages({ ...packages, [e.target.name]: e.target.value });
+      setPackages({
+        ...packages,
+        [e.target.name]: e.target.value,
+        price: {
+          ...packages.price,
+          [e.target.name]: e.target.value,
+        },
+      });
     }
   };
 
   //Summation of price & time
   useEffect(() => {
     if (addServices.length !== 0) {
-      setPackages((s) => ({
-        ...s,
-        price: addServices?.price?.reduce((a, b) => a + b, 0),
+      setPackages((r) => ({
+        ...r,
         time: addServices?.time?.reduce((a, b) => a + b, 0),
+        price: {
+          ...r.price,
+          s: addServices?.smallPrice?.reduce((a, b) => a + b, 0),
+          m: addServices?.mediumPrice?.reduce((a, b) => a + b, 0),
+          l: addServices?.largePrice?.reduce((a, b) => a + b, 0),
+          xl: addServices?.xlargePrice?.reduce((a, b) => a + b, 0),
+        },
       }));
     }
   }, [addServices]);
@@ -54,7 +68,10 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
     setAddServices((s) => ({
       ...s,
       value: e.map((service) => service.value),
-      price: e.map((service) => service.price),
+      smallPrice: e.map((service) => service.smallPrice),
+      mediumPrice: e.map((service) => service.mediumPrice),
+      largePrice: e.map((service) => service.largePrice),
+      xlargePrice: e.map((service) => service.xlargePrice),
       time: e.map((service) => service.time),
     }));
   };
@@ -66,9 +83,19 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
     if (packages.description == '') {
       return toast.error('Description is required ');
     }
-    if (packages.price == '') {
-      return toast.error('Please enter price');
-    } else if (packages.price == 0) {
+    if (
+      packages.price.s == '' ||
+      packages.price.m == '' ||
+      packages.price.l == '' ||
+      packages.price.xl == ''
+    ) {
+      return toast.error('Please enter price for each');
+    } else if (
+      packages.price.s == 0 ||
+      packages.price.m == 0 ||
+      packages.price.l == 0 ||
+      packages.price.xl == 0
+    ) {
       return toast.error('Price cannot be zero');
     }
     if (packages.time == '') {
@@ -140,28 +167,93 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg='6' style={{ margin: 'auto' }}>
+                    <Col lg='3'>
                       <FormGroup>
                         <label className='form-control-label'>
                           {' '}
                           <span style={{ color: 'red' }}>
-                            {packages.price ? '' : '*'}{' '}
+                            {packages.price.s ? '' : '*'}{' '}
                           </span>
-                          Price
+                          Price (S)
                         </label>{' '}
                         <Input
                           className='form-control-alternative text-default'
                           required={true}
-                          placeholder='Enter price'
+                          placeholder='Small'
                           type='text'
-                          value={packages.price}
-                          name='price'
+                          value={packages.price.s}
+                          name='s'
                           onChange={handleNumberInput}
                           maxLength='11'
                         />
                       </FormGroup>
                     </Col>
-                    <Col lg='6' style={{ margin: 'auto' }}>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {packages.price.m ? '' : '*'}{' '}
+                          </span>
+                          Price (M)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='Medium'
+                          type='text'
+                          value={packages.price.m}
+                          name='m'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {packages.price.l ? '' : '*'}{' '}
+                          </span>
+                          Price (L)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='Large'
+                          type='text'
+                          value={packages.price.l}
+                          name='l'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {packages.price.xl ? '' : '*'}{' '}
+                          </span>
+                          Price (XL)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='X-Large'
+                          type='text'
+                          value={packages.price.xl}
+                          name='xl'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col lg='6'>
                       <FormGroup>
                         <label className='form-control-label'>
                           <span style={{ color: 'red' }}>
@@ -191,13 +283,15 @@ const AddPackage = ({ openModal, handleModal, getPackages }) => {
                           </span>{' '}
                           Services
                         </label>
-
                         <Select
                           options={allServices.map((item) => {
                             return {
                               label: item.name,
                               value: item._id,
-                              price: item.price,
+                              smallPrice: item.price.s,
+                              mediumPrice: item.price.m,
+                              largePrice: item.price.l,
+                              xlargePrice: item.price.xl,
                               time: item.time,
                             };
                           })}

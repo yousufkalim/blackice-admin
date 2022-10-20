@@ -30,7 +30,14 @@ const EditService = ({
   };
   const handleNumberInput = (e) => {
     if (!e.target.value.match(/[^0-9]/)) {
-      setService({ ...service, [e.target.name]: e.target.value });
+      setService({
+        ...service,
+        [e.target.name]: e.target.value,
+        price: {
+          ...service.price,
+          [e.target.name]: e.target.value,
+        },
+      });
     }
   };
   const handleSubmit = (e) => {
@@ -42,9 +49,19 @@ const EditService = ({
     if (service.description == '') {
       return toast.error('Description is required ');
     }
-    if (service.price == '') {
-      return toast.error('Please enter price');
-    } else if (service.price == 0) {
+    if (
+      service.price.s == '' ||
+      service.price.m == '' ||
+      service.price.l == '' ||
+      service.price.xl == ''
+    ) {
+      return toast.error('Please enter price for each');
+    } else if (
+      service.price.s == 0 ||
+      service.price.m == 0 ||
+      service.price.l == 0 ||
+      service.price.xl == 0
+    ) {
       return toast.error('Price cannot be zero');
     }
     if (service.time == '') {
@@ -114,27 +131,92 @@ const EditService = ({
                     </Col>
                   </Row>
                   <Row>
-                    <Col lg='6'>
+                    <Col lg='3'>
                       <FormGroup>
                         <label className='form-control-label'>
                           {' '}
                           <span style={{ color: 'red' }}>
-                            {service.price ? '' : '*'}{' '}
+                            {service.price.s ? '' : '*'}{' '}
                           </span>
-                          Price
+                          Price (S)
                         </label>{' '}
                         <Input
                           className='form-control-alternative text-default'
                           required={true}
-                          placeholder='Enter price'
+                          placeholder='Small'
                           type='text'
-                          value={service.price}
-                          name='price'
+                          value={service.price.s}
+                          name='s'
                           onChange={handleNumberInput}
                           maxLength='11'
                         />
                       </FormGroup>
                     </Col>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {service.price.m ? '' : '*'}{' '}
+                          </span>
+                          Price (M)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='Medium'
+                          type='text'
+                          value={service.price.m}
+                          name='m'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {service.price.l ? '' : '*'}{' '}
+                          </span>
+                          Price (L)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='Large'
+                          type='text'
+                          value={service.price.l}
+                          name='l'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col lg='3'>
+                      <FormGroup>
+                        <label className='form-control-label'>
+                          {' '}
+                          <span style={{ color: 'red' }}>
+                            {service.price.xl ? '' : '*'}{' '}
+                          </span>
+                          Price (XL)
+                        </label>{' '}
+                        <Input
+                          className='form-control-alternative text-default'
+                          required={true}
+                          placeholder='X-Large'
+                          type='text'
+                          value={service.price.xl}
+                          name='xl'
+                          onChange={handleNumberInput}
+                          maxLength='11'
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col lg='6'>
                       <FormGroup>
                         <label className='form-control-label'>
